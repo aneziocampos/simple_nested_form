@@ -3,6 +3,10 @@ require 'active_record'
 require 'action_controller'
 require 'action_view'
 require 'action_view/template'
+require 'nokogiri'
+
+require 'simple_form'
+require 'simple_nested_form'
 
 class TablelessModel < ActiveRecord::Base
   def self.columns 
@@ -32,10 +36,4 @@ class Task < TablelessModel
   column :project_id, :integer
   column :name, :string
   belongs_to :project
-end
-
-class Milestone < TablelessModel
-  column :task_id, :integer
-  column :name, :string
-  belongs_to :task
 end

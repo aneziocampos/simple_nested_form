@@ -22,5 +22,6 @@ Gem::Specification.new do |s|
   s.add_dependency "simple_form", "~> 1.3.1"
 
   s.add_development_dependency "rspec", "~> 2.5.0"
+  s.add_development_dependency "nokogiri", "~> 1.4.4"
   s.add_development_dependency "rails", "~> 3.0.5"
 end
