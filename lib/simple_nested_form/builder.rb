@@ -1,3 +1,5 @@
+require "simple_form"
+
 module SimpleNestedForm
   class Builder < ::SimpleForm::FormBuilder
     delegate :content_tag, :link_to, :after_nested_form, :capture, :to => :@template
