@@ -16,31 +16,75 @@ describe SimpleNestedForm::Builder do
     end
   end
 
-  describe "link to add" do
-    subject { Nokogiri::HTML(builder.link_to_add("Add me plz", :tasks)).css("a").first }
+  shared_examples_for "a link_to_add" do |link_name|
+    let(:link) { builder.link_to_add(link_name, :tasks, :class => "add") }
 
-    its(:text) { should == "Add me plz" }
+    subject { Nokogiri::HTML(link).css("a").first }
+
+    its(:text) { should == link_name }
 
     it "contains an attribute named data-association" do
       subject.attr("data-association").should == "tasks"
     end
+
+    describe "options" do
+      it "contains a class named add" do
+        subject.attr("class").should include "add"
+      end
+    end
   end
 
-  describe "link to remove" do
-    let(:output) { Nokogiri::HTML(builder.link_to_remove("Remove me plz")) }
+  shared_examples_for "a link_to_remove" do |link_name|
+    let(:link) { builder.link_to_remove(link_name, :class => "remove") }
 
-    describe "the link itself" do
-      subject { output.css("a").first }
+    subject { Nokogiri::HTML(link).css("a").first }
 
-      its(:text) { should == "Remove me plz" }
+    its(:text) { should == link_name }
 
-      it "contains an attribute named data-remove-association" do
-        subject.attr("data-remove-association").should be_present
-      end
+    it "contains an attribute named data-remove-association" do
+      subject.attr("data-remove-association").should be_present
     end
 
     it "generate a destroy hidden field" do
-      output.css("input[type='hidden'][name*='_destroy']").should have(1).element
+      Nokogiri::HTML(link).css("input[type='hidden'][name*='_destroy']").should have(1).element
+    end
+
+    describe "options" do
+      it "contains a class named add" do
+        subject.attr("class").should include "remove"
+      end
+    end
+  end
+
+  describe "link to add" do
+    context "without a block" do
+      it_should_behave_like "a link_to_add", "Add me plz" do
+        let(:link) { builder.link_to_add("Add me plz", :tasks, :class => "add") }
+      end
+    end
+    
+    context "with a block" do
+      it_should_behave_like "a link_to_add", "A label in a block baby!" do
+        let(:link) do
+          builder.link_to_add(:tasks, :class => "add") { "A label in a block baby!" }
+        end
+      end
+    end
+  end
+
+  describe "link to remove" do
+    context "without a block" do
+      it_should_behave_like "a link_to_remove", "Remove me plz" do
+        let(:link) { builder.link_to_remove("Remove me plz", :class => "remove") }
+      end
+    end
+    
+    context "with a block" do
+      it_should_behave_like "a link_to_remove", "Remove me plz" do
+        let(:link) do
+          builder.link_to_remove(:class => "remove") { "Remove me plz" }
+        end
+      end
     end
   end
 end
