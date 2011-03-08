@@ -15,6 +15,7 @@ module SimpleNestedForm
       end
 
       options.merge!(:"data-association" => association)
+      options[:"data-limit"] = options.delete(:limit)
 
       after_nested_form(association) do
         model_object = object.class.reflect_on_association(association).klass.new

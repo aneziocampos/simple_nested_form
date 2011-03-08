@@ -31,6 +31,10 @@ describe SimpleNestedForm::Builder do
       it "contains a class named add" do
         subject.attr("class").should include "add"
       end
+
+      it "adds a data-limit if limit was specified" do
+        subject.attr("data-limit").should == "3"
+      end
     end
   end
 
@@ -59,14 +63,14 @@ describe SimpleNestedForm::Builder do
   describe "link to add" do
     context "without a block" do
       it_should_behave_like "a link_to_add", "Add me plz" do
-        let(:link) { builder.link_to_add("Add me plz", :tasks, :class => "add") }
+        let(:link) { builder.link_to_add("Add me plz", :tasks, :class => "add", :limit => 3) }
       end
     end
     
     context "with a block" do
       it_should_behave_like "a link_to_add", "A label in a block baby!" do
         let(:link) do
-          builder.link_to_add(:tasks, :class => "add") { "A label in a block baby!" }
+          builder.link_to_add(:tasks, :class => "add", :limit => 3) { "A label in a block baby!" }
         end
       end
     end
