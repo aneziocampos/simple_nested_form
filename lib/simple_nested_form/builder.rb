@@ -11,11 +11,11 @@ module SimpleNestedForm
         end
       end
 
-      link_to(name, "javascript:void(0)", :class => "add_nested_fields", :"data-association" => association)
+      link_to(name, "javascript:void(0)", :"data-association" => association)
     end
 
     def link_to_remove(name = "remove")
-      hidden_field(:_destroy) + link_to(name, "javascript:void(0)" , :class => "remove_nested_fields")
+      hidden_field(:_destroy) + link_to(name, "javascript:void(0)" , :"data-remove-association" => 1)
     end
 
     def fields_for(record_or_name_or_array, *args, &block)

@@ -21,10 +21,6 @@ describe SimpleNestedForm::Builder do
 
     its(:text) { should == "Add me plz" }
 
-    it "contains a class named add_nested_fields" do
-      subject.attr("class").should include "add_nested_fields"
-    end
-
     it "contains an attribute named data-association" do
       subject.attr("data-association").should == "tasks"
     end
@@ -38,8 +34,8 @@ describe SimpleNestedForm::Builder do
 
       its(:text) { should == "Remove me plz" }
 
-      it "contains a class named remove_nested_fields" do
-        subject.attr("class").should include "remove_nested_fields"
+      it "contains an attribute named data-remove-association" do
+        subject.attr("data-remove-association").should be_present
       end
     end
 
