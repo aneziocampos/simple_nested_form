@@ -62,7 +62,7 @@ module SimpleNestedForm
     end
 
     def fields_for_nested_model(name, association, args, block)
-      content_tag :div, :class => "fields" do
+      content_tag :div, :class => "fields #{association.class.model_name.human.downcase}" do
         super
       end
     end

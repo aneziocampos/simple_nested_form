@@ -9,11 +9,10 @@ describe SimpleNestedForm::Builder do
 
   describe "fields wrapper" do
     before  { project.tasks.build }
-    subject { builder.fields_for(:tasks) { "Task"} }
+    subject { Nokogiri::HTML(builder.fields_for(:tasks) { "Task" }).css("div").first.attr("class") }
 
-    it "surrounds the nested fields with a div with class fields" do
-      subject.should == '<div class="fields">Task</div>'
-    end
+    it { should include "fields" }
+    it { should include "task" }
   end
 
   shared_examples_for "a link_to_add" do |link_name|
